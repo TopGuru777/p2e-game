@@ -24,7 +24,7 @@ const InviteCard: React.FC<InviteCardProps> = ({ title, profit }) => {
                 className="w-4 h-4 sm:w-5 sm:h-5 mt-1"
               />
               <p className="text-orange-400">&nbsp;+{profit}</p>
-              <p className="text-white text-left">&nbsp;for you and your friend</p>
+              <p className="text-white text-left">&nbsp;per successful refereal</p>
             </div>
           </div>
         </div>

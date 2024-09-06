@@ -11,11 +11,11 @@ export default function RankingList() {
   }
   return (
     <div className="md:w-full h-[65vh] mx-auto ">
-      <div className="max-h-[50vh] max-sm:max-h-[50vh] overflow-auto">
+      <div className="max-h-[50vh] max-sm:max-h-[50vh] overflow-auto px-4">
         <div className="flex px-3 py-1 text-white text-lg font-bold justify-center align-middle overflow-y-hidden">
           <div className="text-start w-[20%] flex justify-center">Rank</div>
           <div className="text-start w-[55%] flex justify-center">User</div>
-          <div className="text-start w-[20%] flex justify-center">$Mike</div>
+          <div className="text-start w-[20%] flex justify-center">$HYN</div>
         </div>
         {mockData.map((data, index) => (
           <div
@@ -48,7 +48,7 @@ export default function RankingList() {
       </div>
       <hr className="my-3 border-[#363636] border-2" />
       <div
-        className={`flex my-3 px-3 py-2 items-center bg-[#5A4C3B] rounded-lg`}
+        className={`flex my-3 px-3 py-2 items-center bg-[#5A4C3B] rounded-lg mx-4`}
       >
         <div className="text-xl text-start pl-2 w-[20%] text-white">
           {user.ranking}

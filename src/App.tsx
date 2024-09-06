@@ -34,12 +34,12 @@ function App() {
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
-                <Route path="ranking" element={<Ranking />} />
+                <Route path="leaderboard" element={<Ranking />} />
                 <Route path="quest" element={<Quest />} />
                 <Route path="boost" element={<Boost />} />
                 <Route path="mine" element={<Mine />} />
                 <Route path="friends" element={<Friends />} />
-                <Route path="earn" element={<Earn />} />
+                <Route path="tasks" element={<Earn />} />
                 <Route path="airdrop" element={<Airdrop />} />
               </Route>
             </Routes>
