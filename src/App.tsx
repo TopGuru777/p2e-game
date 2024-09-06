@@ -15,7 +15,6 @@ import Mine from "./page/Mine";
 import Friends from "./page/Friends";
 import Earn from "./page/Earn";
 import Airdrop from "./page/AirDrop";
-import Tasks from "./page/Tasks";
 
 function App() {
   const [loading, setLoading] = useState(false);
