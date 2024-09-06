@@ -20,26 +20,26 @@ export default function Footer() {
           }`}
         >
           <img
-            src="/image/mining.png"
+            src="/image/earn.png"
             alt="play"
             className="w-6 h-6 lg:w-8 lg:h-8"
           />
-          <p className="text-[10px] lg:text-sm text-white">Exchange</p>
+          <p className="text-[10px] lg:text-sm text-white">Earn</p>
         </Link>
         <Link
-          to="/mine"
+          to="/leaderboard"
           className={`flex flex-col items-center justify-center cursor-pointer transform origin-bottom transition ${
-            path === "/mine"
+            path === "/leaderboard"
               ? "scale-[110%] opacity-100 bg-transparent p-1 lg:p-2 rounded-2xl"
               : "opacity-50 text-white"
           }`}
         >
           <img
-            src="/image/axs.png"
+            src="/image/leaderboard.png"
             alt="play"
             className="w-6 h-6 lg:w-8 lg:h-8"
           />
-          <p className="text-[10px] lg:text-sm text-white">Mine</p>
+          <p className="text-[10px] lg:text-sm text-white">Leaderboard</p>
         </Link>
         <Link
           to="/friends"
@@ -57,19 +57,19 @@ export default function Footer() {
           <p className="text-[10px] lg:text-sm text-white">Friends</p>
         </Link>
         <Link
-          to="/earn"
+          to="/tasks"
           className={`flex flex-col items-center justify-center cursor-pointer transform origin-bottom transition ${
-            path === "/earn"
+            path === "/tasks"
               ? "scale-[110%] opacity-100  bg-transparent p-1 lg:p-2 rounded-2xl"
               : "opacity-50 text-white"
           }`}
         >
           <img
-            src="/image/earn.png"
-            alt="ranking"
+            src="/image/tick.png"
+            alt="quest"
             className="w-6 h-6 lg:w-8 lg:h-8"
           />
-          <p className="text-[10px] lg:text-sm text-white">Earn</p>
+          <p className="text-[10px] lg:text-sm text-white">Tasks</p>
         </Link>
         <Link
           to="/airdrop"

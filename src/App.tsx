@@ -15,6 +15,7 @@ import Mine from "./page/Mine";
 import Friends from "./page/Friends";
 import Earn from "./page/Earn";
 import Airdrop from "./page/AirDrop";
+import Tasks from "./page/Tasks";
 
 function App() {
   const [loading, setLoading] = useState(false);
@@ -34,12 +35,12 @@ function App() {
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
-                <Route path="ranking" element={<Ranking />} />
+                <Route path="leaderboard" element={<Ranking />} />
                 <Route path="quest" element={<Quest />} />
                 <Route path="boost" element={<Boost />} />
                 <Route path="mine" element={<Mine />} />
                 <Route path="friends" element={<Friends />} />
-                <Route path="earn" element={<Earn />} />
+                <Route path="tasks" element={<Earn />} />
                 <Route path="airdrop" element={<Airdrop />} />
               </Route>
             </Routes>

@@ -2,22 +2,13 @@ import InviteCard from "../component/InviteCard";
 import FriendCard from "../component/FriendCard";
 const Friends = () => {
   return (
-    <div className=" bg-black px-4 pb-24">
-      <p className="text-white text-4xl font-bold">Invite Friends!</p>
-      <p className="text-white text-xl pt-4 pb-6">
-        You and your friend will receive bonuses!
+    <div className=" bg-black px-4 pb-24 pt-4">
+      <p className="text-white text-xl">Invite Friends!</p>
+      <p className="text-white text-3xl pt-4 pb-6 font-bold">
+        Refer friends and earn extra points!
       </p>
       <div className="space-y-2 py-3">
-        <InviteCard title="Invite a friend" profit="343,3432" />
-        <InviteCard
-          title="Invite a friend with Telegram Preminum"
-          profit="5000"
-        />
-      </div>
-      <div>
-        <p className="text-blue-700 text-2xl font-bold py-2 md:py-4">
-          More bonuses
-        </p>
+        <InviteCard title="Invite a friend" profit="1,000" />
       </div>
       <div className="flex flex-row justify-between items-center">
         <p className="text-left py-2 text-white text-xl font-semibold">
