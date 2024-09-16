@@ -5,93 +5,196 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import AnaylsisCard from "../component/section/AnalysisCard";
 import ProgressBar from "../component/ProgressBar";
-import { useSelector } from "../store";
+import { dispatch, useSelector } from "../store";
+import soundEffect from "../../public/effect/water.wav";
+import axios from "../utils/api"
+import { getWallet, insertWallet, updateWallet } from "../store/reducers/wallet";
+import { CreateEffectForMine } from "../component/MoneyUpdateEffect";
+import { isMobile } from "react-device-detect";
+
 function Home() {
+  const PassItemCount = [0, 1, 2, 3, 4, 5];
+  const audio = new Audio(soundEffect);
+  const usernameState = useSelector((state) => state.wallet.user?.username);
   const tokenState = useSelector((state) => state.wallet.user?.balance);
+  const energyState = useSelector((state) => state.wallet.user?.energy);
+  const tapState = useSelector((state) => state.wallet.user?.tap);
+  const limitState = useSelector((state) => state.wallet.user?.limit);
+  const totalState = useSelector((state) => state.wallet.user?.totalPoint);
+  const passItemLevelState = useSelector(
+    (state) => state.wallet.user?.passItemLevel
+  );
+  const passItemStartTimeState = useSelector(
+    (state) => state.wallet.user?.passItemStartTime
+  );
   const [imgStatus, setImgStatus] = useState(false);
+  const [tap, setTap] = useState<number>(tapState);
+  const [username, setUsername] = useState<string>(usernameState);
   const [token, setToken] = useState<number>(tokenState);
-  const [remainedEnergy, setRemainedEnergy] = useState<number>(1000);
+  const [remainedEnergy, setRemainedEnergy] = useState<number>(energyState);
+  const [limit, setLimit] = useState<number>(limitState);
+  const [total, setTotal] = useState<number>(totalState);
+  const [isTouch, setIsTouch] = useState(false); // New state to track touch event
+  const [passItemStartTime, setpassItemStartTime] = useState<number>(
+    passItemStartTimeState
+  );
+  const [passItemLevel, setpassItemLevel] =
+    useState<number>(passItemLevelState);
+  let miningInterval: any;
+
+  
+  useEffect(() => {
+    // const TESTNAME = "Totchka_1803";
+    // setUsername(TESTNAME);
+    // dispatch(insertWallet(TESTNAME));
+    // dispatch(getWallet(TESTNAME));
+
+    // setTap(tapState);
+    // setToken(tokenState);
+    // setTotal(totalState);
+
+    // setRemainedEnergy(energyState);
+    // setpassItemStartTime(passItemStartTimeState);
+
+    const webapp = (window as any).Telegram?.WebApp.initDataUnsafe;
+    console.log("=========>webapp", webapp);
+    if (webapp && webapp["user"]) {
+      setUsername(webapp["user"]["username"]);
+      axios.post(`/earnings/add`, { username: webapp["user"]["username"] });
+      dispatch(insertWallet(webapp["user"]["username"]));
+      dispatch(getWallet(webapp["user"]["username"])).then(() => {
+        setTap(tapState);
+        setToken(tokenState);
+        setRemainedEnergy(energyState);
+      });
+    }
+
+    if (passItemLevelState) {
+      miningInterval = setInterval(() => {
+        // console.log("passive mining +", passItemLevel);
+        setToken((prevToken) => {
+          const tmp = prevToken + PassItemCount[passItemLevel];
+          return tmp;
+        });
+
+        setTotal((prevTotal) => {
+          const tmp = prevTotal + PassItemCount[passItemLevel];
+          return tmp;
+        });
+      }, 1000); // Mine every second
+      return () => {
+        clearInterval(miningInterval);
+      };
+    }
+  }, []);
+
+  // this will not used
+  if (total == -1) {
+    setpassItemStartTime(1);
+    console.log(passItemStartTime);
+    setpassItemLevel(-1);
+  }
+  useEffect(() => {
+    setLimit(limitState);
+  }, [limitState]);
+
   function formatNumberWithCommas(number: number, locale = "en-US") {
     return new Intl.NumberFormat(locale).format(number);
   }
   const bodyRef = useRef<HTMLDivElement>(null);
-  const [score, setScore] = useState<string>("+1");
-  const handleClick = (event: React.MouseEvent<HTMLDivElement>) => {
+  const [score, setScore] = useState<string>("+1"); 
+  
+  const handleTapClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     const rect = event.currentTarget.getBoundingClientRect();
-    const x = Math.random() * (event.clientX - rect.left);
-    const y = Math.random() * (event.clientY - rect.top);
+    const x = event.clientX - rect.left + "px";
+    const y = event.clientY - rect.top + "px";
 
-    const styleElement = document.createElement("style");
-    document.head.appendChild(styleElement);
+    CreateEffectForMine(bodyRef, "ADD", x, y);
+  };
 
-    styleElement.sheet &&
-      styleElement.sheet.insertRule(
-        "@keyframes fade-out-top-right {0% {opacity: 1; transform: translateY(0); } 100% {opacity: 0;transform: translateY(-100%);}}",
-        0
-      );
+  const handleClick = (event: any) => {
+    event.preventDefault();
+    const rect = event.target.getBoundingClientRect();
+    const x = event.clientX - rect.left + "px";
+    const y = event.clientY - rect.top + "px";
 
-    const newDiv = document.createElement("div");
-    newDiv.textContent = `${score}`;
-    // newDiv.style.backgroundImage = "url('image/dollar.png')";
-    newDiv.style.backgroundRepeat = "no-repeat";
-    newDiv.style.backgroundPosition = "center";
-    newDiv.style.fontSize = "30px";
-    newDiv.style.paddingLeft = "30px";
-    newDiv.style.display = "flex";
-    newDiv.style.justifyContent = "center";
-    newDiv.style.alignItems = "center";
-    newDiv.style.backgroundSize = "cover";
-    newDiv.style.width = "40px";
-    newDiv.style.height = "140px";
-    newDiv.style.position = "absolute";
-    newDiv.style.left = `${x + 50}px`;
-    newDiv.style.top = `${y}px`;
-    newDiv.style.color = score == "+1" ? "#58E1E2" : "red";
-    newDiv.className =
-      "dynamic-div animate-fadeouttopright transform max-sm:text-3xl text-5xl font-bold transition not-selectable";
+    CreateEffectForMine(bodyRef, "ADD", x, y);
+  }
 
-    bodyRef.current && bodyRef.current.appendChild(newDiv);
-    const interval = setTimeout(() => newDiv && newDiv.remove(), 1000);
-
-    return () => clearTimeout(interval);
+  const handleTouchStart = (event: TouchEvent) => {
+    Array.from(event.touches).forEach((touch) => {
+      console.log("Touch's current position:", touch);
+      // Call handleClick for each touch point 
+      handleClick({
+        ...touch,
+        target: event.target,
+        preventDefault: () => {}, // Mock preventDefault for non-MouseEvent
+        clientX: touch.clientX,
+        clientY: touch.clientY
+      });
+    });
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setRemainedEnergy((pre) =>
-        pre == 999 ? 1000 : pre < 1000 ? pre + 1 : 1000
-      );
-    }, 21600);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleTap = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (remainedEnergy > 0) {
-      if (remainedEnergy < 500) {
-        setScore("+2");
-        setToken(token + 2);
-      } else {
-        setScore("+1");
-        setToken(token + 1);
+      if (remainedEnergy < limit && remainedEnergy > 0) {
+        // energy generate per 1s
+        // dispatch(updateEnergy(username, remainedEnergy + 1));
       }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [username, remainedEnergy, limit]);
+  
+  const handleTap = (event: React.MouseEvent<HTMLDivElement>) => {
+    audio.play();
+    if (remainedEnergy > 0) {
+      setToken(token + tap);
+      setTotal(total + tap);
+      dispatch(
+        updateWallet(username, total + tap, token + tap, remainedEnergy - 1)
+      );
       setRemainedEnergy(remainedEnergy - 1);
-      handleClick(event);
+      handleTapClick(event);
+    }
+  };
+
+  
+  const handleTouch = (event: any) => {
+    audio.play();
+    const length = event.touches.length;
+    if (remainedEnergy > 0) {
+      setToken(token + tap * length);
+      setTotal(total + tap * length);
+      dispatch(
+        updateWallet(
+          username,
+          total + tap * length,
+          token + tap * length,
+          remainedEnergy - tap * length
+        )
+      );
+      setRemainedEnergy(remainedEnergy - 1);
+      handleTouchStart(event);
     }
   };
 
   const handleMouseDown = () => {
     setImgStatus(true);
   };
+
   const handleMouseLeave = () => {
     setImgStatus(false);
   };
-  console.log("imgStatus", imgStatus);
 
   return (
     <div className="pb-24 px-4">
       <ToastContainer />
-      <AnaylsisCard />
+      <AnaylsisCard
+        tapUnit={1}
+        gdp={total}
+        passive={PassItemCount[passItemLevel]}
+      />
       <div
         id="mainWindow"
         className="relative mt-2 flex flex-col items-center justify-center w-full"
@@ -121,6 +224,11 @@ function Home() {
             ref={bodyRef}
             onMouseDown={handleMouseDown}
             onMouseUp={handleMouseLeave}
+            onTouchStart={(e) => {
+              if (!isMobile) return;
+              setIsTouch(true); // Set touch flag to true
+              handleTouch(e);
+            }}
             onClick={handleTap}
           />
         </div>

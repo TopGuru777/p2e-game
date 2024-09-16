@@ -3,10 +3,11 @@ interface EarnCardProps {
   image: string;
   flag: boolean;
   profit: string;
+  onClick: () => void;
 }
-const EarnCard: React.FC<EarnCardProps> = ({ title, image, flag, profit }) => {
+const EarnCard: React.FC<EarnCardProps> = ({ title, image, flag, profit, onClick = () => {} }) => {
   return (
-    <div className="grid grid-col-1  grid-col-1 w-full">
+    <div className="grid grid-col-1  grid-col-1 w-full" onClick={onClick}>
       <div className="group rounded-xl bg-[#272A30] p-2 sm:p-3 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0 -8px 0px 0px #2196f3] flex justify-between">
         <div className="flex grid-cols-2 gap-3 w-full">
           <div className="my-auto w-14">
