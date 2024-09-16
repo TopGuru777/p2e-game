@@ -1,67 +1,20 @@
-import { useState } from "react";
-import { mockData } from "../mock";
-export default function RankingList() {
-  const [user] = useState({
-    ranking: 200,
-    name: "EKans",
-    $GoXP: 1000000,
-  });
-  function formatNumberWithCommas(number: number, locale = "en-US") {
-    return new Intl.NumberFormat(locale).format(number);
-  }
+import RankingItem from "./RankingItem";
+const RankingList: React.FC<RankingListProps> = ({ usersa, username }) => {
   return (
-    <div className="md:w-full h-[65vh] mx-auto ">
-      <div className="max-h-[50vh] max-sm:max-h-[50vh] overflow-auto px-4">
-        <div className="flex px-3 py-1 text-white text-lg font-bold justify-center align-middle overflow-y-hidden">
-          <div className="text-start w-[20%] flex justify-center">Rank</div>
-          <div className="text-start w-[55%] flex justify-center">User</div>
-          <div className="text-start w-[20%] flex justify-center">$HYN</div>
-        </div>
-        {mockData.map((data, index) => (
-          <div
-            key={index}
-            className={`flex ${
-              index > 0 && "my-3"
-            } px-3 py-2 items-center bg-[#363636] rounded-lg`}
-          >
-            <div className="text-xl text-start pl-2 w-[20%] text-white flex justify-center align-middle">
-              {index == 0 ? (
-                <img src="image/crown.png" alt="" width={30} height={30} />
-              ) : index == 1 ? (
-                <img src="image/trophy.png" alt="" width={30} height={30} />
-              ) : index == 2 ? (
-                <img src="image/star.png" alt="" width={30} height={30} />
-              ) : (
-                index + 1
-              )}
-            </div>
-            <div className="relative h-10 overflow-hidden w-[60%] flex items-center justify-center">
-              <img src="/image/mikeT.png" alt="avatar" className="w-10 h-10" />
-              <p className="text-xl text-start pl-2 text-white">{data.name}</p>
-            </div>
-
-            <p className="text-xl text-start pl-2 w-[30%] text-white">
-              {formatNumberWithCommas(data.$GoXP)}
-            </p>
+    <div className="md:w-full h-[70vh] mx-auto px-4 ">
+      <div className=" overflow-auto">
+        {usersa.map((data: any, idx: any) => (
+          <div key={idx}>
+            <RankingItem index={idx} data={data} username={username} />
           </div>
         ))}
       </div>
-      <hr className="my-3 border-[#363636] border-2" />
-      <div
-        className={`flex my-3 px-3 py-2 items-center bg-[#5A4C3B] rounded-lg mx-4`}
-      >
-        <div className="text-xl text-start pl-2 w-[20%] text-white">
-          {user.ranking}
-        </div>
-        <div className="relative h-12 overflow-hidden w-[60%] flex items-center">
-          <img src="/image/mikeT.png" alt="avatar" className="w-10 h-10" />
-          <p className="text-xl text-start pl-2 text-white">{user.name}</p>
-        </div>
-
-        <p className="text-xl text-start pl-2 w-[30%] text-white">
-          {formatNumberWithCommas(user.$GoXP)}
-        </p>
-      </div>
     </div>
   );
+};
+export default RankingList;
+
+interface RankingListProps {
+  usersa: any; // The target date as a string
+  username: string;
 }
