@@ -1,6 +1,6 @@
 import InviteCard from "../component/InviteCard";
 import FriendCard from "../component/FriendCard";
-import { initUtils } from "@telegram-apps/sdk";
+// import { initUtils } from "@telegram-apps/sdk";
 import { useSelector } from "../store";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -8,14 +8,14 @@ import axios from "../utils/api"
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 const Friends = () => {
-  const utils = initUtils();
+  // const utils = initUtils();
   const username_state = useSelector((state) => state.wallet.user?.username);
   const [username, setUsername] = useState<string>(username_state);
   const [friends, setFriends] = useState<any[]>([]);
   const [viewFriends, setViewFriends] = useState<any[]>([]);
 
   const [textToCopy, setTextToCopy] = useState<string>("");
-  const [searchInput, setSearchInput] = useState("");
+  // const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
     setUsername(username_state);

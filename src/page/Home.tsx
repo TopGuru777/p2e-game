@@ -34,7 +34,7 @@ function Home() {
   const [remainedEnergy, setRemainedEnergy] = useState<number>(energyState);
   const [limit, setLimit] = useState<number>(limitState);
   const [total, setTotal] = useState<number>(totalState);
-  const [isTouch, setIsTouch] = useState(false); // New state to track touch event
+  // const [isTouch, setIsTouch] = useState(false); // New state to track touch event
   const [passItemStartTime, setpassItemStartTime] = useState<number>(
     passItemStartTimeState
   );
@@ -102,7 +102,7 @@ function Home() {
     return new Intl.NumberFormat(locale).format(number);
   }
   const bodyRef = useRef<HTMLDivElement>(null);
-  const [score, setScore] = useState<string>("+1"); 
+  // const [score, setScore] = useState<string>("+1"); 
   
   const handleTapClick = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -226,7 +226,7 @@ function Home() {
             onMouseUp={handleMouseLeave}
             onTouchStart={(e) => {
               if (!isMobile) return;
-              setIsTouch(true); // Set touch flag to true
+              // setIsTouch(true); // Set touch flag to true
               handleTouch(e);
             }}
             onClick={handleTap}

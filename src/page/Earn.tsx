@@ -10,15 +10,15 @@ const Earn = () => {
   
   const username_state = useSelector((state) => state.wallet.user?.username);
   const balance_state = useSelector((state) => state.wallet.user?.balance);
-  const dailyEarnTime = useSelector(
-    (state) => state.wallet.user?.dailyEarnTime
-  );
+  // const dailyEarnTime = useSelector(
+  //   (state) => state.wallet.user?.dailyEarnTime
+  // );
   const [username, setUsername] = useState<string>(username_state);
   const [balance, setBalance] = useState<number>(balance_state);
 
   const bodyRef = useRef<HTMLDivElement>(null);
-  const DAY = 86400 * 1000;
-  const [targetDate, setTargetData] = useState<number>(dailyEarnTime + DAY);
+  // const DAY = 86400 * 1000;
+  // const [targetDate, setTargetData] = useState<number>(dailyEarnTime + DAY);
 
   useEffect(() => {
     setUsername(username_state);
@@ -33,7 +33,7 @@ const Earn = () => {
           dispatch(updateBalance(username, balance + 1000));
           // toast.success("You have received +1000 daily Earning successfully!");
           CreateEffect(bodyRef, 1000, "ADD", "70%", "180px");
-          setTargetData(Date.now() + DAY);
+          // setTargetData(Date.now() + DAY);
         } else
           toast.info(
             "You earned already today's daily earnings! Please try tomorrow."
@@ -45,61 +45,61 @@ const Earn = () => {
     }
   };
 
-  const handleJoinTelegramGroup = async () => {
-    try {
-      await axios.post(`/earnings/${username}`).then((res) => {
-        // if (res.data.joinTelegram.status) {
-        if (res.status === 200) {
-          // if (!res.data.joinTelegram.earned) {
-          //   dispatch(updateBalance(username, balance + 1000)).then(() => {
-          //     axios.post(`/earnings/update/joinTelegram/${username}`, {
-          //       status: true,
-          //       earned: true,
-          //     });
-          toast.success("You have received +1000 coins successfully!");
-          //   });
-          // } else {
-          //   toast.warning("You have already received bonus!");
-          // }
-        } else {
-          toast.warning(
-            "You didn't join Telegram Group yet! Please join again"
-          );
-        }
-      });
-    } catch (error) {
-      toast.warning("Unknown error occurred. Please try again later.");
-      // console.log(error);
-    }
-  };
+  // const handleJoinTelegramGroup = async () => {
+  //   try {
+  //     await axios.post(`/earnings/${username}`).then((res) => {
+  //       // if (res.data.joinTelegram.status) {
+  //       if (res.status === 200) {
+  //         // if (!res.data.joinTelegram.earned) {
+  //         //   dispatch(updateBalance(username, balance + 1000)).then(() => {
+  //         //     axios.post(`/earnings/update/joinTelegram/${username}`, {
+  //         //       status: true,
+  //         //       earned: true,
+  //         //     });
+  //         toast.success("You have received +1000 coins successfully!");
+  //         //   });
+  //         // } else {
+  //         //   toast.warning("You have already received bonus!");
+  //         // }
+  //       } else {
+  //         toast.warning(
+  //           "You didn't join Telegram Group yet! Please join again"
+  //         );
+  //       }
+  //     });
+  //   } catch (error) {
+  //     toast.warning("Unknown error occurred. Please try again later.");
+  //     // console.log(error);
+  //   }
+  // };
 
   
-  const handleSubscribeTelegramChannel = async () => {
-    try {
-      await axios.post(`/earnings/${username}`).then((res) => {
-        if (res.data.subscribeTelegram.status) {
-          if (!res.data.subscribeTelegram.earned) {
-            dispatch(updateBalance(username, balance + 1000)).then(() => {
-              axios.post(`/earnings/update/subscribeTelegram/${username}`, {
-                status: true,
-                earned: true,
-              });
-              toast.success("You have received +1000 coins successfully!");
-            });
-          } else {
-            toast.warning("You have already received bonus!");
-          }
-        } else {
-          toast.warning(
-            "You didn't subscribe Telegram Channel yet! Please join again"
-          );
-        }
-      });
-    } catch (error) {
-      // console.log(error);
-      toast.warning("Unknown error occurred. Please try again later.");
-    }
-  };
+  // const handleSubscribeTelegramChannel = async () => {
+  //   try {
+  //     await axios.post(`/earnings/${username}`).then((res) => {
+  //       if (res.data.subscribeTelegram.status) {
+  //         if (!res.data.subscribeTelegram.earned) {
+  //           dispatch(updateBalance(username, balance + 1000)).then(() => {
+  //             axios.post(`/earnings/update/subscribeTelegram/${username}`, {
+  //               status: true,
+  //               earned: true,
+  //             });
+  //             toast.success("You have received +1000 coins successfully!");
+  //           });
+  //         } else {
+  //           toast.warning("You have already received bonus!");
+  //         }
+  //       } else {
+  //         toast.warning(
+  //           "You didn't subscribe Telegram Channel yet! Please join again"
+  //         );
+  //       }
+  //     });
+  //   } catch (error) {
+  //     // console.log(error);
+  //     toast.warning("Unknown error occurred. Please try again later.");
+  //   }
+  // };
 
   return (
     <div className="py-10 bg-black p-4 pb-24">

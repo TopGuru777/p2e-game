@@ -3,7 +3,7 @@ interface EarnCardProps {
   image: string;
   flag: boolean;
   profit: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 const EarnCard: React.FC<EarnCardProps> = ({ title, image, flag, profit, onClick = () => {} }) => {
   return (
