@@ -10,15 +10,14 @@ const Earn = () => {
   
   const username_state = useSelector((state) => state.wallet.user?.username);
   const balance_state = useSelector((state) => state.wallet.user?.balance);
-  // const dailyEarnTime = useSelector(
-  //   (state) => state.wallet.user?.dailyEarnTime
-  // );
+  const dailyEarnTime = useSelector(
+    (state) => state.wallet.user?.dailyEarnTime
+  );
   const [username, setUsername] = useState<string>(username_state);
   const [balance, setBalance] = useState<number>(balance_state);
 
-  const bodyRef = useRef<HTMLDivElement>(null);
-  // const DAY = 86400 * 1000;
-  // const [targetDate, setTargetData] = useState<number>(dailyEarnTime + DAY);
+  const DAY = 86400 * 1000;
+  const [targetDate, setTargetDate] = useState<number>(dailyEarnTime + DAY);
 
   useEffect(() => {
     setUsername(username_state);
@@ -31,9 +30,8 @@ const Earn = () => {
       await axios.post(`/wallet/getDailyEarn/${username}`).then((res) => {
         if (res.status === 200) {
           dispatch(updateBalance(username, balance + 1000));
-          // toast.success("You have received +1000 daily Earning successfully!");
-          CreateEffect(bodyRef, 1000, "ADD", "70%", "180px");
-          // setTargetData(Date.now() + DAY);
+          toast.success("You have received +1000 daily Earning successfully!");
+          setTargetDate(Date.now() + DAY);
         } else
           toast.info(
             "You earned already today's daily earnings! Please try tomorrow."
@@ -113,7 +111,9 @@ const Earn = () => {
           title="Daily reward"
           image="image/cdollar.png"
           profit="1K"
-          flag={true}
+          flag={false}
+          timer={true}
+          targetDate={targetDate}
           onClick={handleGetDailyEarning}
         />
       </div>
@@ -130,32 +130,8 @@ const Earn = () => {
           flag={true}
         />
         <EarnCard
-          title="Get exclusive listing info"
-          image="image/youtube.png"
-          profit="5000"
-          flag={true}
-        />
-        <EarnCard
-          title="Join our TG channel"
-          image="image/tg.png"
-          profit="234.3K"
-          flag={true}
-        />
-        <EarnCard
-          title="Get exclusive listing info"
-          image="image/youtube.png"
-          profit="5000"
-          flag={true}
-        />
-        <EarnCard
-          title="Follow your X account"
+          title="Follow our X account"
           image="image/twitter.png"
-          profit="234.3K"
-          flag={true}
-        />
-        <EarnCard
-          title="Choose"
-          image="image/hy.png"
           profit="234.3K"
           flag={true}
         />

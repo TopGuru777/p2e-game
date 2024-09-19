@@ -44,12 +44,14 @@ const Friends = () => {
       </p>
       <div className="space-y-2 py-3">
         <CopyToClipboard text={textToCopy} onCopy={handleCopy}>
-          <InviteCard title="Invite a friend" profit="1,000" />
+          <div>
+            <InviteCard title="Invite a friend" profit="1,000" />
+          </div>
         </CopyToClipboard>
       </div>
       <div className="flex flex-row justify-between items-center">
         <p className="text-left py-2 text-white text-xl font-semibold">
-          List of your friends(15)
+          List of your friends({ viewFriends.length })
         </p>
         <img
           src="/image/redo.png"
@@ -69,8 +71,8 @@ const Friends = () => {
             />
           ))
           : 
-          <div className="flex h-[180px] items-center">
-            There is no friends.
+          <div className="flex h-[180px] items-center justify-center">
+            There are no friends.
           </div>
         }
       </div>

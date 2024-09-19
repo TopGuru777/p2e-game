@@ -1,13 +1,25 @@
+import { useRef } from "react";
+import CountdownTimer from "./CountdownTimer";
+import { CreateEffect } from "./MoneyUpdateEffect";
+
 interface EarnCardProps {
   title: string;
   image: string;
   flag: boolean;
   profit: string;
+  timer?: boolean;
+  targetDate?: number;
   onClick?: () => void;
 }
-const EarnCard: React.FC<EarnCardProps> = ({ title, image, flag, profit, onClick = () => {} }) => {
+const EarnCard: React.FC<EarnCardProps> = ({ title, image, flag, profit, onClick = () => {}, timer = false, targetDate = 0 }) => {
+  
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const handleClick = () => {
+    CreateEffect(bodyRef, 1000, "ADD", "80%", "420px");
+    onClick();
+  }
   return (
-    <div className="grid grid-col-1  grid-col-1 w-full" onClick={onClick}>
+    <div className="grid grid-col-1  grid-col-1 w-full" onClick={handleClick} ref={bodyRef}>
       <div className="group rounded-xl bg-[#272A30] p-2 sm:p-3 transition relative duration-300 cursor-pointer hover:translate-y-[3px] hover:shadow-[0 -8px 0px 0px #2196f3] flex justify-between">
         <div className="flex grid-cols-2 gap-3 w-full">
           <div className="my-auto w-14">
@@ -24,6 +36,12 @@ const EarnCard: React.FC<EarnCardProps> = ({ title, image, flag, profit, onClick
               </div>
             </div>
             <div className="flex items-center">
+              
+              {timer && (
+                <div className="flex absolute right-10 aspect-[1/1]">
+                  <CountdownTimer targetDate={targetDate} />
+                </div>
+              )}
               {flag === true ? (
                 <img src="/image/tick.png" alt="" className="w-8 h-8 ml-1" />
               ) : (

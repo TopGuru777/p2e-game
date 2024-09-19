@@ -15,6 +15,7 @@ import Mine from "./page/Mine";
 import Friends from "./page/Friends";
 import Earn from "./page/Earn";
 import Airdrop from "./page/AirDrop";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [loading, setLoading] = useState(false);

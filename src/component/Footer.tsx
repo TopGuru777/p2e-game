@@ -80,7 +80,7 @@ export default function Footer() {
           }`}
         >
           <img
-            src="/image/hamstercoin.png"
+            src="/image/dollar.png"
             alt="quest"
             className="w-6 h-6 lg:w-8 lg:h-8"
           />

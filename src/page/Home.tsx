@@ -1,14 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import AnaylsisCard from "../component/section/AnalysisCard";
 import ProgressBar from "../component/ProgressBar";
 import { dispatch, useSelector } from "../store";
 import soundEffect from "../../public/effect/water.wav";
 import axios from "../utils/api"
-import { getWallet, insertWallet, updateWallet } from "../store/reducers/wallet";
+import { getWallet, insertWallet, updateEnergy, updateWallet } from "../store/reducers/wallet";
 import { CreateEffectForMine } from "../component/MoneyUpdateEffect";
 import { isMobile } from "react-device-detect";
 
@@ -34,7 +32,7 @@ function Home() {
   const [remainedEnergy, setRemainedEnergy] = useState<number>(energyState);
   const [limit, setLimit] = useState<number>(limitState);
   const [total, setTotal] = useState<number>(totalState);
-  // const [isTouch, setIsTouch] = useState(false); // New state to track touch event
+  const [isTouch, setIsTouch] = useState(false); // New state to track touch event
   const [passItemStartTime, setpassItemStartTime] = useState<number>(
     passItemStartTimeState
   );
@@ -42,19 +40,18 @@ function Home() {
     useState<number>(passItemLevelState);
   let miningInterval: any;
 
-  
   useEffect(() => {
-    // const TESTNAME = "Totchka_1803";
-    // setUsername(TESTNAME);
-    // dispatch(insertWallet(TESTNAME));
-    // dispatch(getWallet(TESTNAME));
+    const TESTNAME = "Totchka_1803";
+    setUsername(TESTNAME);
+    dispatch(insertWallet(TESTNAME));
+    dispatch(getWallet(TESTNAME));
 
-    // setTap(tapState);
-    // setToken(tokenState);
-    // setTotal(totalState);
+    setTap(tapState);
+    setToken(tokenState);
+    setTotal(totalState);
 
-    // setRemainedEnergy(energyState);
-    // setpassItemStartTime(passItemStartTimeState);
+    setRemainedEnergy(energyState);
+    setpassItemStartTime(passItemStartTimeState);
 
     const webapp = (window as any).Telegram?.WebApp.initDataUnsafe;
     console.log("=========>webapp", webapp);
@@ -139,7 +136,7 @@ function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       if (remainedEnergy < limit && remainedEnergy > 0) {
-        // energy generate per 1s
+        // genergy generate per 1s
         // dispatch(updateEnergy(username, remainedEnergy + 1));
       }
     }, 1000);
@@ -189,7 +186,6 @@ function Home() {
 
   return (
     <div className="pb-24 px-4">
-      <ToastContainer />
       <AnaylsisCard
         tapUnit={1}
         gdp={total}
@@ -214,7 +210,7 @@ function Home() {
             <ProgressBar value={remainedEnergy / 10} />
           </div>
         </div>
-        <div className="w-full sm:p-4 md:-6 lg:p-16">
+        <div className="w-full sm:p-12 md:p-6 lg:p-16 px-12">
           <div
             className={`relative bg-[url('/image/wolftoken.jpeg')] rounded-full bg-cover w-full aspect-square z-10 ${
               remainedEnergy > 0
@@ -226,10 +222,16 @@ function Home() {
             onMouseUp={handleMouseLeave}
             onTouchStart={(e) => {
               if (!isMobile) return;
-              // setIsTouch(true); // Set touch flag to true
+              setIsTouch(true); // Set touch flag to true
               handleTouch(e);
             }}
-            onClick={handleTap}
+            onClick={(e) => {
+              if (isTouch) {
+                setIsTouch(false); // Reset touch flag
+                return;
+              }
+              handleTap(e);
+            }}
           />
         </div>
         <div className="flex flex-row justify-between w-full px-10 max-sm:px-4 mt-4">
