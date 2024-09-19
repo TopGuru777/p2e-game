@@ -82,9 +82,9 @@ export default function Ranking() {
       </div>
 
       {users_state.length ? (
-        <div className="overflow-y-scroll">
+        // <div className="overflow-y-scroll">
           <RankingList usersa={usersa} username={username} />
-        </div>
+        // </div>
       ) : (
         <div className="flex items-center justify-center h-[300px]">
           <LoadingComponent />

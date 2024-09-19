@@ -4,7 +4,7 @@ const Airdrop = () => {
     <div className="py-10 bg-black p-4 h-[100vh] pb-24">
       <div className="ml-2">
         <div className="flex justify-center items-center">
-          <img src="image/hamstercoin.png" className="w-34 h-32" />
+          <img src="image/wolftoken.jpeg" className="w-34 h-32 rounded-full" />
         </div>
         <p className="text-white text-3xl font-bold p-2">
           Get ready, Airdrop is
