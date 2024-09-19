@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import EarnCard from "../component/EarnCard";
 import { dispatch, useSelector } from "../store";
 import { updateBalance } from "../store/reducers/wallet";
 import axios from "../utils/api"
-import { CreateEffect } from "../component/MoneyUpdateEffect";
+// import { CreateEffect } from "../component/MoneyUpdateEffect";
 import { toast } from "react-toastify";
 
 const Earn = () => {

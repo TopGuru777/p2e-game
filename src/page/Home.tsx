@@ -6,7 +6,7 @@ import ProgressBar from "../component/ProgressBar";
 import { dispatch, useSelector } from "../store";
 import soundEffect from "../../public/effect/water.wav";
 import axios from "../utils/api"
-import { getWallet, insertWallet, updateEnergy, updateWallet } from "../store/reducers/wallet";
+import { getWallet, insertWallet, updateWallet } from "../store/reducers/wallet";
 import { CreateEffectForMine } from "../component/MoneyUpdateEffect";
 import { isMobile } from "react-device-detect";
 
