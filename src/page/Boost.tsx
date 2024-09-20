@@ -73,7 +73,7 @@ export default function Boost() {
         </h1>
         <div className="flex px-3 py-1 gap-5 text-white text-lg font-bold justify-center align-middle overflow-y-hidden">
           <img src="/image/dollar.png" alt="" className="w-10 h-10" />
-          <h1 className="text-4xl">5145</h1>
+          <h1 className="text-4xl">{ token }</h1>
         </div>
         <hr className="my-3 border-[#363636] border-1" />
         <div className="flex justify-start">
@@ -86,7 +86,7 @@ export default function Boost() {
           <img src="/image/icon/lightning.svg" alt="" className="w-10 h-10" />
           <div className="flex flex-col">
             <h3 className="text-2xl text-white">Full energy</h3>
-            <h3 className="text-xl text-[#a8a8a7]">6/6 available</h3>
+            <h3 className="text-xl text-[#a8a8a7]">1/1 available</h3>
           </div>
         </div>
         <div className="flex justify-start">

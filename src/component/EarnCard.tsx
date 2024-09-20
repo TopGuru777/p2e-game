@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import CountdownTimer from "./CountdownTimer";
 import { CreateEffect } from "./MoneyUpdateEffect";
+import { toast } from "react-toastify";
 
 interface EarnCardProps {
   title: string;
@@ -15,7 +16,16 @@ const EarnCard: React.FC<EarnCardProps> = ({ title, image, flag, profit, onClick
   
   const bodyRef = useRef<HTMLDivElement>(null);
   const handleClick = () => {
-    CreateEffect(bodyRef, 1000, "ADD", "80%", "420px");
+    if(targetDate && timer) {
+      const timeLeft = new Date(targetDate).getTime() - new Date().getTime();
+      if(timeLeft > 0) {
+        toast.info(
+          "You earned already today's daily earnings! Please try tomorrow."
+        );
+        return;
+      }
+      CreateEffect(bodyRef, 1000, "ADD", "80%", "420px");
+    }
     onClick();
   }
   return (
