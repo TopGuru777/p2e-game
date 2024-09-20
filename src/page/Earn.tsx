@@ -15,6 +15,8 @@ const Earn = () => {
   );
   const [username, setUsername] = useState<string>(username_state);
   const [balance, setBalance] = useState<number>(balance_state);
+  const [joinTg, setJoinTg] = useState(false);
+  const [followX, setFollowX] = useState(false);
 
   const DAY = 86400 * 1000;
   const [targetDate, setTargetDate] = useState<number>(dailyEarnTime + DAY);
@@ -24,6 +26,14 @@ const Earn = () => {
     setBalance(balance_state);
   }, [username_state, balance_state]);
 
+  useEffect(() => {
+    const setTaskFlags = async () => {
+      const res = await axios.post(`/earnings/${username}`);
+      setJoinTg(res.data.joinTelegram.earned);
+      setFollowX(res.data.followTwitter.earned);
+    }
+    setTaskFlags();
+  }, []);
   
   const handleGetDailyEarning = async () => {
     try {
@@ -43,34 +53,49 @@ const Earn = () => {
     }
   };
 
-  // const handleJoinTelegramGroup = async () => {
-  //   try {
-  //     await axios.post(`/earnings/${username}`).then((res) => {
-  //       // if (res.data.joinTelegram.status) {
-  //       if (res.status === 200) {
-  //         // if (!res.data.joinTelegram.earned) {
-  //         //   dispatch(updateBalance(username, balance + 1000)).then(() => {
-  //         //     axios.post(`/earnings/update/joinTelegram/${username}`, {
-  //         //       status: true,
-  //         //       earned: true,
-  //         //     });
-  //         toast.success("You have received +1000 coins successfully!");
-  //         //   });
-  //         // } else {
-  //         //   toast.warning("You have already received bonus!");
-  //         // }
-  //       } else {
-  //         toast.warning(
-  //           "You didn't join Telegram Group yet! Please join again"
-  //         );
-  //       }
-  //     });
-  //   } catch (error) {
-  //     toast.warning("Unknown error occurred. Please try again later.");
-  //     // console.log(error);
-  //   }
-  // };
+  const handleJoinTelegramGroup = async () => {
+    try {
+      const webapp = (window as any).Telegram.WebApp;
+      if(!webapp || joinTg)
+        return;
+      webapp.openLink("https://t.me/hyenagame");
+      if (!joinTg) {
+        dispatch(updateBalance(username, balance + 1000)).then(() => {
+          axios.post(`/earnings/update/joinTelegram/${username}`, {
+            status: true,
+            earned: true,
+          });
+        toast.success("You have received +1000 coins successfully!");
+        });
+      }
+    } catch (error) {
+      toast.warning("Unknown error occurred. Please try again later.");
+      // console.log(error);
+    }
+  };
 
+  const handleFollowTwitter = async () => {
+    try {
+      const webapp = (window as any).Telegram.WebApp;
+      if(!webapp || followX)
+        return;
+      webapp.openLink("https://x.com/Laughinghy68824");
+      if (!followX) {
+        dispatch(updateBalance(username, balance + 1000)).then(() => {
+          axios.post(`/earnings/update/followTwitter/${username}`, {
+            status: true,
+            earned: true,
+          });
+        toast.success("You have received +1000 coins successfully!");
+        });
+      } else {
+        toast.warning("You have already received bonus!");
+      }
+    } catch (error) {
+      toast.warning("Unknown error occurred. Please try again later.");
+      // console.log(error);
+    }
+  };
   
   // const handleSubscribeTelegramChannel = async () => {
   //   try {
@@ -126,14 +151,16 @@ const Earn = () => {
         <EarnCard
           title="Join our TG channel"
           image="image/tg.png"
-          profit="234.3K"
-          flag={true}
+          profit="1K"
+          flag={joinTg}
+          onClick={handleJoinTelegramGroup}
         />
         <EarnCard
           title="Follow our X account"
-          image="image/twitter.png"
-          profit="234.3K"
-          flag={true}
+          image="image/x.png"
+          profit="1K"
+          flag={followX}
+          onClick={handleFollowTwitter}
         />
       </div>
     </div>
