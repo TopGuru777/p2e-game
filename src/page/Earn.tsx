@@ -17,6 +17,7 @@ const Earn = () => {
   const [balance, setBalance] = useState<number>(balance_state);
   const [joinTg, setJoinTg] = useState(false);
   const [followX, setFollowX] = useState(false);
+  const [joinYoutube, setJoinYoutube] = useState(false);
 
   const DAY = 86400 * 1000;
   const [targetDate, setTargetDate] = useState<number>(dailyEarnTime + DAY);
@@ -31,6 +32,7 @@ const Earn = () => {
       const res = await axios.post(`/earnings/${username}`);
       setJoinTg(res.data.joinTelegram.earned);
       setFollowX(res.data.followTwitter.earned);
+      setJoinYoutube(res.data.joinYoutube.earned);
     }
     setTaskFlags();
   }, []);
@@ -64,7 +66,8 @@ const Earn = () => {
           axios.post(`/earnings/update/joinTelegram/${username}`, {
             status: true,
             earned: true,
-          });
+        });
+        setJoinTg(true);
         toast.success("You have received +1000 coins successfully!");
         });
       }
@@ -86,6 +89,7 @@ const Earn = () => {
             status: true,
             earned: true,
           });
+        setFollowX(true);
         toast.success("You have received +1000 coins successfully!");
         });
       } else {
@@ -96,7 +100,31 @@ const Earn = () => {
       // console.log(error);
     }
   };
-  
+
+  const handleJoinYoutube = async () => {
+    try {
+      const webapp = (window as any).Telegram.WebApp;
+      if(!webapp || joinYoutube)
+        return;
+      webapp.openLink("https://www.youtube.com/@Laughinghy");
+      if (!joinYoutube) {
+        dispatch(updateBalance(username, balance + 1000)).then(() => {
+          axios.post(`/earnings/update/joinYoutube/${username}`, {
+            status: true,
+            earned: true,
+          });
+        setJoinYoutube(true);
+        toast.success("You have received +1000 coins successfully!");
+        });
+      } else {
+        toast.warning("You have already received bonus!");
+      }
+    } catch (error) {
+      toast.warning("Unknown error occurred. Please try again later.");
+      // console.log(error);
+    }
+  };
+
   // const handleSubscribeTelegramChannel = async () => {
   //   try {
   //     await axios.post(`/earnings/${username}`).then((res) => {
@@ -161,6 +189,13 @@ const Earn = () => {
           profit="1K"
           flag={followX}
           onClick={handleFollowTwitter}
+        />
+        <EarnCard
+          title="Join our Youtube Channel"
+          image="image/youtube.png"
+          profit="1K"
+          flag={joinYoutube}
+          onClick={handleJoinYoutube}
         />
       </div>
     </div>
